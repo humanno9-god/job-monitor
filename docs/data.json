@@ -1,0 +1,32 @@
+{
+  "updated_at": "2026-06-30T00:00:00",
+  "companies": [
+    {"name": "삼성화재", "type": "손해보험", "site_url": "https://www.samsungcareers.com/subsid/detail/E21", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "DB손해보험", "type": "손해보험", "site_url": "https://dbgroup.recruiter.co.kr/career/home", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "현대해상", "type": "손해보험", "site_url": "https://hi.recruiter.co.kr/career/home", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "KB손해보험", "type": "손해보험", "site_url": "https://kbinsure.recruiter.co.kr/app/jobnotice/list", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "메리츠화재", "type": "손해보험", "site_url": "https://www.meritzfire.com", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "한화손해보험", "type": "손해보험", "site_url": "https://www.hanwhain.com", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "흥국화재", "type": "손해보험", "site_url": "https://www.heungkukfire.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "롯데손해보험", "type": "손해보험", "site_url": "https://www.lotteins.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "농협손해보험", "type": "손해보험", "site_url": "https://www.nhfire.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "MG손해보험", "type": "손해보험", "site_url": "https://www.mggeneralinsure.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "AXA손해보험", "type": "손해보험", "site_url": "https://www.axa.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "캐롯손해보험", "type": "손해보험", "site_url": "https://www.carrotins.com", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "삼성생명", "type": "생명보험", "site_url": "https://www.samsungcareers.com/subsid/detail/E20", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "한화생명", "type": "생명보험", "site_url": "https://www.recruit-hanwhalife.com", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "교보생명", "type": "생명보험", "site_url": "https://www.kyobo.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "신한라이프", "type": "생명보험", "site_url": "https://shinhan-life.recruiter.co.kr/career/home", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "미래에셋생명", "type": "생명보험", "site_url": "https://miraeassetlife.recruiter.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "동양생명", "type": "생명보험", "site_url": "https://www.myangel.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "농협생명", "type": "생명보험", "site_url": "https://www.nhlife.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "흥국생명", "type": "생명보험", "site_url": "https://www.heungkuklife.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "푸본현대생명", "type": "생명보험", "site_url": "https://www.fubonhyundailife.com", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "KDB생명", "type": "생명보험", "site_url": "https://www.kdblife.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "ABL생명", "type": "생명보험", "site_url": "https://www.abllife.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "메트라이프생명", "type": "생명보험", "site_url": "https://www.metlife.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "처브라이프생명", "type": "생명보험", "site_url": "https://www.chubblife.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "AIA생명", "type": "생명보험", "site_url": "https://www.aia.co.kr", "status": "pending", "source": null, "jobs": [], "error": null},
+    {"name": "라이나생명", "type": "생명보험", "site_url": "https://www.lina.co.kr", "status": "pending", "source": null, "jobs": [], "error": null}
+  ]
+}
