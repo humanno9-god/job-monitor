@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>국내 보험사 채용 모니터</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #1a1d24;
+    --border: #2a2e38;
+    --text: #e8e9ec;
+    --muted: #8b8f9a;
+    --accent: #4f7cff;
+    --pc: #ff8a5b;
+    --life: #4fd1c5;
+    --danger: #ff5c5c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  h1 { font-size: 20px; margin: 0; }
+  .updated {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: default; }
+  .filters {
+    display: flex;
+    gap: 8px;
+    padding: 14px 20px 0;
+  }
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+  }
+  .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--text);
+    background: rgba(79,124,255,0.12);
+  }
+  main {
+    padding: 16px 20px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .company-name {
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .badge.pc { background: rgba(255,138,91,0.15); color: var(--pc); }
+  .badge.life { background: rgba(79,209,197,0.15); color: var(--life); }
+  .job-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .job-item a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+  .job-item a:hover { color: var(--accent); }
+  .job-meta { color: var(--muted); font-size: 11.5px; margin-left: 4px; }
+  .empty-msg, .error-msg {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .error-msg { color: var(--danger); }
+  .site-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .loading, .global-error {
+    text-align: center;
+    color: var(--muted);
+    padding: 60px 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>국내 손해보험·생명보험사 채용 모니터</h1>
+    <div class="updated" id="updatedAt">불러오는 중...</div>
+  </div>
+  <div class="controls">
+    <button id="refreshBtn" onclick="loadData(true)">🔄 Refresh</button>
+  </div>
+</header>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">전체</button>
+  <button class="filter-btn" data-filter="손해보험" onclick="setFilter('손해보험')">손해보험</button>
+  <button class="filter-btn" data-filter="생명보험" onclick="setFilter('생명보험')">생명보험</button>
+</div>
+
+<main>
+  <div id="content" class="loading">데이터를 불러오는 중...</div>
+</main>
+
+<script>
+let allData = null;
+let currentFilter = 'all';
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === f);
+  });
+  render();
+}
+
+async function loadData(isManualRefresh) {
+  const btn = document.getElementById('refreshBtn');
+  const content = document.getElementById('content');
+  if (isManualRefresh) {
+    btn.disabled = true;
+    btn.textContent = '갱신 중...';
+  }
+  try {
+    const res = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('데이터 파일을 찾을 수 없습니다 (' + res.status + ')');
+    allData = await res.json();
+    render();
+  } catch (e) {
+    content.innerHTML = '<div class="global-error">⚠️ 데이터를 불러오지 못했습니다.<br>' + e.message + '</div>';
+  } finally {
+    if (isManualRefresh) {
+      btn.disabled = false;
+      btn.textContent = '🔄 Refresh';
+    }
+  }
+}
+
+function render() {
+  if (!allData) return;
+  const updatedEl = document.getElementById('updatedAt');
+  const d = new Date(allData.updated_at);
+  updatedEl.textContent = '마지막 업데이트: ' + d.toLocaleString('ko-KR', { dateStyle: 'medium', timeStyle: 'short' });
+
+  const companies = allData.companies.filter(c =>
+    currentFilter === 'all' || c.type === currentFilter
+  );
+
+  const content = document.getElementById('content');
+  if (companies.length === 0) {
+    content.innerHTML = '<div class="empty-msg">표시할 회사가 없습니다.</div>';
+    return;
+  }
+
+  content.innerHTML = '<div class="grid">' + companies.map(renderCard).join('') + '</div>';
+}
+
+function renderCard(c) {
+  const badgeClass = c.type === '손해보험' ? 'pc' : 'life';
+  let body;
+
+  if (c.status === 'error') {
+    body = '<div class="error-msg">⚠️ 정보 갱신 실패 (사이트 구조 변경 또는 접속 오류)</div>';
+  } else if (!c.jobs || c.jobs.length === 0) {
+    body = '<div class="empty-msg">현재 진행중인 공고가 없습니다.</div>';
+  } else {
+    body = '<ul class="job-list">' + c.jobs.slice(0, 6).map(j => `
+      <li class="job-item">
+        <a href="${escapeAttr(j.url)}" target="_blank" rel="noopener">${escapeHtml(j.title)}</a>
+        ${j.deadline ? `<span class="job-meta">· ${escapeHtml(j.deadline)}</span>` : ''}
+      </li>
+    `).join('') + '</ul>';
+  }
+
+  return `
+    <div class="card">
+      <div class="card-head">
+        <span class="company-name">${escapeHtml(c.name)}</span>
+        <span class="badge ${badgeClass}">${c.type}</span>
+      </div>
+      ${body}
+      <a class="site-link" href="${escapeAttr(c.site_url)}" target="_blank" rel="noopener">회사 채용 사이트 바로가기 →</a>
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function escapeAttr(str) { return escapeHtml(str); }
+
+loadData(false);
+</script>
+
+</body>
+</html>
